@@ -56,13 +56,18 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
-          </li>     
+          </li>
+          @if(empty(Auth::id()))
           <li class="nav-item">
-          <a class="nav-link dropdown-toggle" href="{{ url('/home') }}" >{{ Auth::user()->name }}</a>          
-          </li>  
+            <a class="nav-link" href="{{url('/login')}}">Login</a>
+          </li>   
+          @endif
+          @if(Auth::id())
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="{{url('/logout')}}">{{ Auth::user()->name }}</a>
+          </li>     
+          @endif
         </ul>
-        
-
   </nav>
 
    <div class="container">

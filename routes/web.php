@@ -27,4 +27,11 @@
 	Route::get('/categories/{cat}', 'CategoriesController');
 	Route::get('/logout', 'LogoutController@logout');
 Auth::routes();
+Route::get('/logout' ,function(){
+	$logout=Auth::logout();
+	return view('auth.login');
+});
+Route::get('/' ,function(){
+	return view('auth.login');
+});
 Route::get('/home', 'HomeController@index')->name('home');
