@@ -56,10 +56,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
-          </li>         
+          </li>     
           <li class="nav-item">
-          <a class="nav-link dropdown-toggle" href="{{ url('/home') }}" >{{ Auth::user()->name }}</a>
-            
+          <a class="nav-link dropdown-toggle" href="{{ url('/home') }}" >{{ Auth::user()->name }}</a>          
           </li>  
         </ul>
         
