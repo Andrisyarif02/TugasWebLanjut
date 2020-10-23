@@ -9,7 +9,7 @@ use \Cache;
 class CategoriesController extends Controller
 {
     public function __invoke($cat){
-        $articlesAll = Article::all()->where('Genre', $cat);
+        $articlesAll = Article::all()->where('genre', $cat);
         
         $value = Cache::rememberForever('articles', function(){
 

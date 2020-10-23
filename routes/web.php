@@ -23,10 +23,11 @@
 	//Praktikum1 minggu 3
 	Route::get('/awal', 'HomeControllerawal@awal');
 	Route::get('/about', 'AboutController@about');
-	Route::get('/articles/{id}', 'ArticlesController');
+	Route::get('/articles/{id}', 'ArticlesController@viewArticles');
 	Route::get('/categories/{cat}', 'CategoriesController');
 	Route::get('/logout', 'LogoutController@logout');
 Auth::routes();
+
 Route::get('/logout' ,function(){
 	$logout=Auth::logout();
 	return view('auth.login');
@@ -35,3 +36,11 @@ Route::get('/' ,function(){
 	return view('auth.login');
 });
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/manage', 'ArticlesController@index')->name('manage');
+Route::get('/artikel/add','ArticlesController@add');
+Route::post('/artikel/create','ArticlesController@create');
+Route::get('/artikel/edit/{id}','ArticlesController@edit');
+Route::post('/artikel/update/{id}','ArticlesController@update');
+Route::get('/artikel/delete/{id}','ArticlesController@delete');
+
