@@ -49,17 +49,23 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/awal">Home
-              <span class="sr-only">(current)</span>
-            </a>
+        <li class="nav-item {{ Route::is('awal') ? 'active' : '' }}">
+              @can('user-display')
+              <a class="nav-link" href="{{ route('awal') }}">Home</a>
+              @endcan
+        </li>
+
+          <li class="nav-item {{ Route::is('about') ? 'active' : '' }}">
+              @can('user-display')
+              <a class="nav-link" href="{{ route('about') }}">About</a>
+              @endcan
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
+          <li class="nav-item {{ Route::is('manage') ? 'active' : '' }}">
+              @can('manage-articles')
+              <a class="nav-link" href="{{ route('manage') }}">Kelola</a>
+              @endcan
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/manage">Manage</a>
-          </li>
+
           @if(empty(Auth::id()))
           <li class="nav-item">
             <a class="nav-link" href="{{url('/login')}}">Login</a>

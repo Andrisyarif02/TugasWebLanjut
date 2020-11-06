@@ -6,8 +6,7 @@
         <div class="card">
             <div class="btn btn-primary">
                 <h3>Tambah Artikel</h3>
-            </div>
-            
+            </div>          
             <form action="/artikel/create" method="POST">
             @csrf
             <div class="form-group">

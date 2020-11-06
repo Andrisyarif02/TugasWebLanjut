@@ -4,8 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Facades\Gate;
 class articlesController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth');
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-articles')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses');
+        });
+    }
+
     public function viewArticles($id){
         $articles = Article::find($id);
         $articles = json_decode(json_encode($articles));
@@ -56,5 +66,6 @@ class articlesController extends Controller
         $articles->delete();
         return redirect('/manage');
     }
+
 
 }
