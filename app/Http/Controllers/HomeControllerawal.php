@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Article;
 
+
 class HomeControllerawal extends Controller
 {
     public function awal(){

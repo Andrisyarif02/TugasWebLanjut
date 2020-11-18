@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+Use App\User;
 use Illuminate\Support\Facades\Gate;
+use PDF;
+
 class articlesController extends Controller
 {
     public function __construct()
@@ -27,7 +30,8 @@ class articlesController extends Controller
     public function index()
     {
         $articles = Article::all();
-        return view('manage',['articles' => $articles]);
+        $users = User::all();
+        return view('manage',['articles' => $articles],['users' => $users]);
     }
     public function add()
     {
@@ -35,14 +39,15 @@ class articlesController extends Controller
     }
     public function create(Request $request)
     {
-        $article = Article::create([
+        if($request->file('image')){
+            $image_name = $request->file('image')->store('img','public');
+        }
+        Article::create([
             'title' => $request->title,
             'content' => $request->content,
             'genre' => $request->genre,
-            'featured_image' => $request->image
+            'featured_image' => $image_name,
         ]);
-        // $article = json_decode(json_encode($article));
-        // echo "</pre>"; print_r($article); die; 
         return redirect('/manage');
     }
     public function edit($id)
@@ -56,7 +61,12 @@ class articlesController extends Controller
         $articles->title = $request->title;
         $articles->content = $request->content;
         $articles->genre = $request->genre;
-        $articles->featured_image = $request->image;
+        if($articles->featured_image && file_exists(storage_path('app/public/' . $articles->featured_image)))
+        {
+            Storage::delete('public/'. $articles->featured_image);
+        }
+        $image_name = $request->file('image')->store('images', 'public');
+        $articles->featured_image = $image_name;
         $articles->save();
         return redirect('/manage');
     }
@@ -66,6 +76,30 @@ class articlesController extends Controller
         $articles->delete();
         return redirect('/manage');
     }
+    public function edituser($id)     {       
+        $users = User::find($id);        
+        return view('user',['user'=>$users]);   
+        }
+    public function updateuser($id, Request $request)     {       
+        $users = User::find($id);        
+        $users->name = $request->name;       
+        $users->email = $request->email;
+        $users->password = $request->password;   
+        $users->roles = $request->roles;      
+        $users->save();       
+        return redirect('/manage');    
+       } 
+    public function deleteuser($id)
+    {
+        $users = User::find($id);
+        $users->delete();
+        return redirect('/manage');
+    }
 
-
+    public function cetak_pdf(){
+        $articles = Article::all();
+        $pdf = PDF::loadview('articles_pdf',['articles'=>$articles]);
+        return $pdf->stream();
+       }
+       
 }

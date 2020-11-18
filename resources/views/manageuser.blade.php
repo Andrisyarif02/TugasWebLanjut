@@ -5,7 +5,7 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Daftar Artikel</h3>
+                    <h3>Daftar User</h3>
                 </div>
                 <a href="artikel/add" class="btn btn-primary">Tambah Data</a>
                 <br><br>
@@ -17,23 +17,18 @@
                         <th>Judul</th>
                         <th>Genre</th>
                         <th>Tanggal</th>
-                        <!-- <th>Image</th> -->
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($articles as $a)
+                    @foreach($users as $a)
                     <tr>
-                        <td>{{$a->id}}</td>
-                        <td>{{$a->title}}</td>
-                        <td>{{$a->genre}}</td>
-                        <td>{{$a->created_at}}</td>
-                        <!-- <td><img src="{{ asset('/img/'.$a->featured_image) }}" alt="ImageCap"></td> -->
-                        <!-- <td>{{ $a->featured_image }}</td> -->
+                        <td>{{$a->name}}</td>
+                        <td>{{$a->email}}</td>
+                        <td>{{$a->password}}</td>
+                        <td>{{$a->roles}}</td>
                         <td>
-                            <a href="artikel/edit/{{ $a->id }}" class="badge badge-warning">Edit</a>
-                            <a href="artikel/delete/{{ $a->id }}" class="badge badge-danger">Hapus</a>
-                            <a href="/article/cetak_pdf" class="btn btn-primary" target="_blank">CETAK PDF</a>
-
+                            <a href="user/edit/{{ $a->id }}" class="badge badge-warning">Edit</a>
+                            <a href="user/delete/{{ $a->id }}" class="badge badge-danger">Hapus</a>
                         </td>
                     </tr>
                     @endforeach
@@ -42,7 +37,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="col-md-4">
 
 <!-- Search Widget -->
@@ -89,42 +83,7 @@
   </div>
 </div>
 
-
 </div>
-<div class="col-lg-8">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Daftar User</h3>
-                </div>
-                <br><br>
-                <div class="cardbody">
-                    <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>email</th>
-                        <th>Password</th>
-                        <th>Roles</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($users as $b)
-                    <tr>
-                        <td>{{$b->name}}</td>
-                        <td>{{$b->email}}</td>
-                        <td>{{$b->password}}</td>
-                        <td>{{$b->roles}}</td>
-                        <td>
-                            <a href="user/edit/{{ $a->id }}" class="badge badge-warning">Edit</a>
-                            <a href="user/delete/{{ $a->id }}" class="badge badge-danger">Hapus</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

@@ -21,8 +21,8 @@
 	//	return view('blog', ['name' => 'Andri' ], ['nim' => '1931710074']);
 	//});
 	//Praktikum1 minggu 3
-	Route::get('/awal', 'HomeControllerawal@awal');
-	Route::get('/about', 'AboutController@about');
+	Route::get('/awal', 'HomeControllerawal@awal')->name('awal');
+	Route::get('/about', 'AboutController@about')->name('about');
 	Route::get('/articles/{id}', 'ArticlesController@viewArticles');
 	Route::get('/categories/{cat}', 'CategoriesController');
 	Route::get('/logout', 'LogoutController@logout');
@@ -43,4 +43,7 @@ Route::post('/artikel/create','ArticlesController@create');
 Route::get('/artikel/edit/{id}','ArticlesController@edit');
 Route::post('/artikel/update/{id}','ArticlesController@update');
 Route::get('/artikel/delete/{id}','ArticlesController@delete');
+
+Route::get('/article/cetak_pdf', 'ArticlesController@cetak_pdf');
+
 

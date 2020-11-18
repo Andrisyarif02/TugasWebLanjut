@@ -3,11 +3,8 @@
 <div class="class container">
     <div class="class row">
     <div class="col-lg-8">
-        <div class="card">
-            <div class="btn btn-primary">
-                <h3>Tambah Artikel</h3>
-            </div>          
-            <form action="/artikel/create" method="POST">
+        <div class="card">      
+        <form action="/artikel/create" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Judul</label>
@@ -23,10 +20,10 @@
             </div>
             <div class="form-group">
                 <label for="image">Feature Image</label>
-                <input type="text" class="form-control" required="required" name="image"></br>
+                <input type="file" class="form-control" required="required" name="image"></br>
             </div>
             <button type="submit" name="add" class="btn btn-primary float-right">Tambah Data</button>
-        </form>
+        </form>       
         </div>
     </div>
     <div class="col-md-4">

@@ -65,6 +65,11 @@
               <a class="nav-link" href="{{ route('manage') }}">Kelola</a>
               @endcan
           </li>
+          <li class="nav-item {{ Route::is('manageuser') ? 'active' : '' }}">
+              @can('manage-user')
+              <a class="nav-link" href="{{ route('manageuser') }}">user</a>
+              @endcan
+          </li>
 
           @if(empty(Auth::id()))
           <li class="nav-item">
