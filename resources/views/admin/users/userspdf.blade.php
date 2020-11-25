@@ -10,27 +10,25 @@
         }
     </style>
     <center>
-        <h5>Laporan Artikel</h4>
+        <h5>Laporan User</h4>
     </center>
     <table class='table table-bordered'>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Judul</th>
-                <th>Isi</th>
-                <th>Genre</th>
-                <th>Gambar</th>
+                <th>Name</th>
+                <th>Profil</th>
+                <th>Email</th>
+                <th>Roles</th>
             </tr>
         </thead>
         <tbody>
             @php $i=1 @endphp
-            @foreach($articles as $a)
+            @foreach($users as $b)
             <tr>
-                <td>{{ $i++ }}</td>
-                <td>{{$a->title}}</td>
-                <td>{{$a->content}}</td>
-                <td>{{$a->genre}}</td>
-                <td><img width="200px" src="{{ public_path('storage/'.$a->featured_image)}}"></td>
+                <td>{{$b->name}}</td>
+                <td><img width="200px" src="{{ public_path('storage/'.$b->image)}}" ></td>
+                <td>{{$b->email}}</td>
+                <td>{{$b->roles}}</td>
             </tr>
             @endforeach
         </tbody>

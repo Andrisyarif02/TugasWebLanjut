@@ -47,3 +47,12 @@ Route::get('/artikel/delete/{id}','ArticlesController@delete');
 Route::get('/article/cetak_pdf', 'ArticlesController@cetak_pdf');
 
 
+Route::get('/manageUser', 'UsersController@User') ->name('manageUser');
+Route::get('/manageUser/edit/{id}', 'UsersController@edit')->name('edit');
+Route::get('/manageUser/add', 'UsersController@add');
+Route::post('/manageUser/create', 'UsersController@create');
+Route::post('/manageUser/update/{id}', 'UsersController@update');
+Route::get('/manageUser/delete/{id}', 'UsersController@delete');
+Route::get('/manageUser/cetakpdf', 'UsersController@cetak_pdf');
+
+

@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
-Use App\User;
+use App\User;
 use Illuminate\Support\Facades\Gate;
 use PDF;
+use Storage;
 
 class articlesController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('auth');
-        $this->middleware(function($request, $next){
-            if(Gate::allows('manage-articles')) return $next($request);
-            abort(403, 'Anda tidak memiliki cukup hak akses');
-        });
-    }
+    // public function __construct()
+    // {
+    //     //$this->middleware('auth');
+    //     $this->middleware(function($request, $next){
+    //         if(Gate::allows('manage-articles')) return $next($request);
+    //         abort(403, 'Anda tidak memiliki cukup hak akses');
+    //     });
+    // }
 
     public function viewArticles($id){
         $articles = Article::find($id);
@@ -31,11 +32,11 @@ class articlesController extends Controller
     {
         $articles = Article::all();
         $users = User::all();
-        return view('manage',['articles' => $articles],['users' => $users]);
+        return view('admin.articles.manage',['articles' => $articles],['users' => $users]);
     }
     public function add()
     {
-        return view('addarticle');
+        return view('admin.articles.addarticle');
     }
     public function create(Request $request)
     {
@@ -53,21 +54,24 @@ class articlesController extends Controller
     public function edit($id)
     {
         $articles = Article::find($id);
-        return view('editarticle',['articles'=>$articles]);
+        return view('admin.articles.editarticle',['articles'=>$articles]);
     }
     public function update($id, Request $request)
     {
         $articles = Article::find($id);
-        $articles->title = $request->title;
-        $articles->content = $request->content;
-        $articles->genre = $request->genre;
-        if($articles->featured_image && file_exists(storage_path('app/public/' . $articles->featured_image)))
-        {
-            Storage::delete('public/'. $articles->featured_image);
+        if ($request->file('image')) {
+            // echo "Has Image"; die;
+            $articles->title = $request->title;
+            $articles->content = $request->content;
+            $articles->genre = $request->genre;
+            if($articles->featured_image && file_exists(storage_path('app/public/' . $articles->featured_image)))
+            {
+                Storage::delete('public/'. $articles->featured_image);
+            }
+            $image_name = $request->file('image')->store('img', 'public');
+            $articles->featured_image = $image_name;
+            $articles->save();
         }
-        $image_name = $request->file('image')->store('images', 'public');
-        $articles->featured_image = $image_name;
-        $articles->save();
         return redirect('/manage');
     }
     public function delete($id)
@@ -76,30 +80,11 @@ class articlesController extends Controller
         $articles->delete();
         return redirect('/manage');
     }
-    public function edituser($id)     {       
-        $users = User::find($id);        
-        return view('user',['user'=>$users]);   
-        }
-    public function updateuser($id, Request $request)     {       
-        $users = User::find($id);        
-        $users->name = $request->name;       
-        $users->email = $request->email;
-        $users->password = $request->password;   
-        $users->roles = $request->roles;      
-        $users->save();       
-        return redirect('/manage');    
-       } 
-    public function deleteuser($id)
-    {
-        $users = User::find($id);
-        $users->delete();
-        return redirect('/manage');
-    }
+    
 
     public function cetak_pdf(){
         $articles = Article::all();
         $pdf = PDF::loadview('articles_pdf',['articles'=>$articles]);
         return $pdf->stream();
        }
-       
 }
